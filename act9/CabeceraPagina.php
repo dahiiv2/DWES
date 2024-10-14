@@ -12,6 +12,7 @@
             $this->fuente = $fuente;
         }
 
+        //all llamarse la función crea un h1 con las variables pasadas por el constructor
         public function graficar() {
             echo 
             "<h1 
