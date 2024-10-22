@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["nombre"]) && !isset($_
 
         <p>Bienvenido! Has iniciado sesion como: <strong><?php echo htmlspecialchars($_SESSION["nombre"])?></strong></p>
 
-        <a href="login.php">Ir a la página inicial</a>
+        <a href="index.php">Ir a la página inicial</a>
         <br>
         <a href="CerrarSesion.php">Cerrar sesion</a>
         <!-- lo que se muestra si los nombres no coinciden -->
@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["nombre"]) && !isset($_
 
         <p>Acceso restringido, introduce el nombre correcto</p>
 
-        <a href="login.php">Ir a la página inicial</a>
+        <a href="index.php">Ir a la página inicial</a>
         <br>
         <a href="CerrarSesion.php">Cerrar sesion</a>
     <?php }?>

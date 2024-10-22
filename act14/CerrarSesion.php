@@ -1,7 +1,6 @@
 <?php
 //abrimos la sesion y destruimos la informacion relacionada
 session_start();
-
 session_destroy();
 ?>
 
