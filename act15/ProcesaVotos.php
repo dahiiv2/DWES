@@ -7,7 +7,7 @@ if (!isset($_SESSION["nombre"])) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    switch ($_POST['accion']) {
+    switch ($_POST["accion"]) {
         case 'voto1':
             $_SESSION["votos1"] += 1;
             break;

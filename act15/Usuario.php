@@ -21,6 +21,7 @@ class Usuario {
         $this->contrasena = $contrasenya;
     }
 
+    //esto siempre se llama al hacer el set que se hace en el constructor
     public function validarContrasenya($contrasenya) {
         if (strlen($contrasenya) < 6) {
             throw new ContrasenaInvalidaException("La contraseña debe tener al menos 6 caracteres.");

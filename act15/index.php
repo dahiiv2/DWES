@@ -10,11 +10,13 @@
             $nombre = $_POST["nombre"];
             $contrasenya = $_POST["contrasenya"];
 
+        //si hay sesion, creamos una cuenta nueva
         if(!isset($_SESSION["usuario"])) {
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $nombre = $_POST["nombre"];
                 $contrasenya = $_POST["contrasenya"];
                 
+                //creamos usuario nuevo, lo serializamos y mandamos a panelControl
                 try {
                     $usuario = new Usuario($nombre, $contrasenya);
                     $_SESSION["nombre"] = $_POST["nombre"];
@@ -22,10 +24,12 @@
                     $_SESSION["usuario"] = serialize($usuario);
                     $_SESSION["login"] = true;
                     header("Location: panelControl.php");
+                    //muestra nuestras excepciones
                 } catch (ContrasenaInvalidaException $e) {
                     $error = $e->getMessage();
                 }   
             }
+        //si hay una cuenta, confirmamos que la informacion sea correcta, si lo es avanzamos si no contra incorrecta
         } else {
             $usuario = unserialize($_SESSION["usuario"]);
             if ($nombre === $_SESSION["nombre"] && $contrasenya === $_SESSION["contrasenya"])  {
