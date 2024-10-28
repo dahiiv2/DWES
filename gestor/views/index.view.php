@@ -12,6 +12,7 @@
         <h1>Gestor de Tareas - Login</h1>
     </div>
 
+        <!-- formulario para hacer login -->
         <form action="" method="post">
             <label for="nombre">Nombre: </label>
             <input type="text" name="nombre" id="nombre" required>
@@ -20,7 +21,8 @@
             <input type="password" name="contrasenya" id="contrasenya" required>
 
             <p id="error">
-                <?php 
+                <?php
+                    //si hay error lo imprimimos y borramos
                     if (isset($_SESSION["error"])) { 
                         echo $_SESSION["error"]; 
                         unset($_SESSION["error"]);
