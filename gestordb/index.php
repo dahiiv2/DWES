@@ -4,8 +4,7 @@
     }
 
     require 'views/index.view.php';
-    require 'ContrasenaInvalidaException.php';
-    require 'Usuario.php';
+    require 'clases/ContrasenaInvalidaException.php';
     
     //si venimos por un post y se ha escrito el nombre (esto ultimo es solo para que no de un warning)
     if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["nombre"])) {
@@ -34,15 +33,18 @@
     
             if ($resultados) {
                 $_SESSION["nombre"] = $nombre;
-                header("Location: gestor.php");
-                exit();
+
 
                 $select = $pdo->prepare("SELECT id FROM cuentas WHERE usuario = :usuario");
                 $select->bindParam(':usuario', $nombre);
 
                 $select->execute();
 
-                $_SESSION["idusuario"] = $select->fetch();
+                $result = $select->fetch(PDO::FETCH_ASSOC);
+                $_SESSION["idusuario"] = $result['id'];
+
+                header("Location: gestor.php");
+                exit();
 
                 
             } else {

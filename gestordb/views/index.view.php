@@ -14,6 +14,7 @@
 
         <!-- formulario para hacer login -->
         <form action="" method="post">
+            <h3>Login con cuenta existente</h3>
             <label for="nombre">Nombre: </label>
             <input type="text" name="nombre" id="nombre" required>
 
@@ -32,6 +33,17 @@
 
             <input type="submit" value="Login" id="submit">
         </form>
+
+            <form action="crearCuenta.php" method="post">
+                <h3>Crear Cuenta</h3>
+                <label for="nuevo_nombre">Nombre: </label>
+                <input type="text" name="nuevo_nombre" id="nuevo_nombre" required>
+
+                <label for="nueva_contrasenya">Contraseña: </label>
+                <input type="password" name="nueva_contrasenya" id="nueva_contrasenya" required>
+
+                <input type="submit" value="Crear Cuenta" id="submit">
+            </form>
 
         <form action="cerrarSesion.php" method="post">
             <button type="submit" id="cerrar" name="cerrar">Cerrar Sesion</button>
