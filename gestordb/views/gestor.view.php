@@ -63,28 +63,32 @@
                     <tbody>
                         <?php foreach ($tareas as $tarea): ?>
                             <tr>
-                                <td><?php echo htmlspecialchars($tarea->nombre); ?></td>
+                                <td><?php echo $tarea->nombre; ?></td>
                                 <td><?php echo $tarea->prioridad; ?></td>
-                                <td><?php echo htmlspecialchars($tarea->fecha); ?></td>
+                                <td><?php echo $tarea->fecha; ?></td>
                                 <td>
+                                    <!-- formulario para modificar el nombre de la tarea, pasamos a gestor.php -->                                    
                                     <form method="post" action="">
+                                        <!-- pasamos la accion que vamos a hacer (modificar) y el numero de tarea (index)-->
                                         <input type="hidden" name="action" value="modificar">
-                                        <input type="hidden" name="index" value="<?php echo htmlspecialchars($tarea->id); ?>">
-                                        <input type="text" name="nuevo_nombre" value="<?php echo htmlspecialchars($tarea->nombre); ?>">
+                                        <input type="hidden" name="index" value="<?php echo $tarea->id; ?>">
+                                        <input type="text" name="nuevo_nombre" value="<?php echo $tarea->nombre; ?>">
                                         <input type="submit" value="Modificar">
                                     </form>
                                 </td>
                                 <td>
+                                    <!-- formulario para borrar la tarea, pasamos a gestor.php -->
                                     <form method="post" action="">
+                                        <!-- pasamos la accion que vamos a hacer (borrar) y el numero de tarea (index)-->
                                         <input type="hidden" name="action" value="borrar">
-                                        <input type="hidden" name="index" value="<?php echo htmlspecialchars($tarea->id); ?>">
+                                        <input type="hidden" name="index" value="<?php echo $tarea->id; ?>">
                                         <input type="submit" value="Borrar Tarea">
                                     </form>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="5">
-                                    <em>Descripción: <?php echo htmlspecialchars($tarea->descripcion); ?></em>
+                                    <em>Descripción: <?php echo $tarea->descripcion; ?></em>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

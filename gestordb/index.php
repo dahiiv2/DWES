@@ -1,62 +1,49 @@
 <?php
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
+// iniciamos sesión si aún no se ha iniciado
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-    require 'views/index.view.php';
-    require 'clases/ContrasenaInvalidaException.php';
-    
-    //si venimos por un post y se ha escrito el nombre (esto ultimo es solo para que no de un warning)
-    if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["nombre"])) {
-        $nombre = $_POST["nombre"];
-        $contrasenya = $_POST["contrasenya"];
-    
-        $hostDB = "localhost";
-        $nombreDB = "dwes";
-        $userDB = "root";
-        $passDB = "";
-    
-        $dsn = "mysql:host=$hostDB;dbname=$nombreDB;";
+require 'views/index.view.php';
+require 'clases/ContrasenaInvalidaException.php';
 
-        $pdo = new PDO($dsn, $userDB, $passDB);
-    
-        try {
-            $pdo = new PDO($dsn, $userDB, $passDB);
-    
-            $select = $pdo->prepare("SELECT * FROM cuentas WHERE usuario = :usuario AND contrasenya = :contrasenya");
-            $select->bindParam(':usuario', $nombre);
-            $select->bindParam(':contrasenya', $contrasenya);
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["nombre"])) {
+    $nombre = $_POST["nombre"];
+    $contrasenya = $_POST["contrasenya"];
 
-            $select->execute();
-        
-            $resultados = $select->fetch();
-    
-            if ($resultados) {
-                $_SESSION["nombre"] = $nombre;
+    $hostDB = "localhost";
+    $nombreDB = "dwes";
+    $userDB = "root";
+    $passDB = "";
 
+    // creamos la conexión
+    $dsn = "mysql:host=$hostDB;dbname=$nombreDB;";
+    $pdo = new PDO($dsn, $userDB, $passDB);
 
-                $select = $pdo->prepare("SELECT id FROM cuentas WHERE usuario = :usuario");
-                $select->bindParam(':usuario', $nombre);
+    try {
+        // buscamos al usuario en la tabla de cuentas
+        $select = $pdo->prepare("SELECT * FROM cuentas WHERE usuario = :usuario");
+        $select->bindParam(':usuario', $nombre);
+        $select->execute();
 
-                $select->execute();
+        $resultados = $select->fetch(PDO::FETCH_ASSOC);
 
-                $result = $select->fetch(PDO::FETCH_ASSOC);
-                $_SESSION["idusuario"] = $result['id'];
+        // verificamos la contraseña
+        if ($resultados && password_verify($contrasenya, $resultados["contrasenya"])) {
+            $_SESSION["nombre"] = $nombre;
+            $_SESSION["idusuario"] = $resultados["id"];
 
-                header("Location: gestor.php");
-                exit();
-
-                
-            } else {
-                $_SESSION["error"] = "Nombre o contraseña inválida.";
-                header("Location: index.php");
-                exit();
-            }
-        } catch (PDOException $e) {
-            $_SESSION["error"] = "Error al conectar con la base de datos: ". $e->getMessage();
+            header("Location: gestor.php");
+            exit();
+        } else {
+            $_SESSION["error"] = "Nombre o contraseña inválida.";
             header("Location: index.php");
             exit();
         }
+    } catch (PDOException $e) {
+        $_SESSION["error"] = "Error al conectar con la base de datos: " . $e->getMessage();
+        header("Location: index.php");
+        exit();
     }
+}
 ?>
-
