@@ -45,5 +45,14 @@ class ManagerTareas {
         $select->bindParam(":id", $tareaId);
         $select->execute();
     }
+
+    // obtener un objeto tarea por su ID
+    public function getTareaById($tareaId) {
+        $query = "SELECT Nombre AS nombre, Descripción AS descripcion, Prioridad AS prioridad, Fecha AS fecha FROM tareas WHERE ID = :id";
+        $select = $this->pdo->prepare($query);
+        $select->bindParam(":id", $tareaId);
+        $select->execute();
+        return $select->fetch(PDO::FETCH_OBJ);
+    }
 }
 ?>
